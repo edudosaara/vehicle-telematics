@@ -1,5 +1,5 @@
 # First question - Vehicle Telematics
-![Vehicle Telematics Pipeline](vehicle_telematics_ingestion_pipeline.png)
+![Vehicle Telematics Pipeline](vehicle_telematics_pipeline.png)
 ## Sources
 Sources of real-time messages and history.
 ### Vehicle

@@ -14,7 +14,7 @@ from diagrams.gcp.database import Firestore
 from diagrams.gcp.api import Endpoints
 from diagrams.gcp.api import APIGateway
 
-with Diagram("Vehicle Telematics Ingestion Pipeline", show=False):
+with Diagram("Vehicle Telematics Pipeline", show=False):
     with Cluster("Sources"):
         d_logs=Datacenter("Description\nlogs")
         t_logs=Datacenter("Telematics\nlogs")
