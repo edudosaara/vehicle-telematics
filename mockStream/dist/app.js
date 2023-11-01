@@ -8,6 +8,7 @@ const stream_1 = require("stream");
 const app = (0, express_1.default)();
 const port = 3000;
 const descriptionToTelematicsProportion = 0.1;
+const messagesPerDay = 200000;
 const randomString = (size, spaced = true, numbers = true) => {
     const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     const numerics = "0123456789";
@@ -25,16 +26,18 @@ const randomObj = () => {
 const messageStream = (descriptionProportion = descriptionToTelematicsProportion) => {
     return new stream_1.Readable({
         read() {
-            let message = {
-                "vehicle_id": Math.ceil(Math.random() * 9999),
-            };
-            if (Math.random() > descriptionProportion) {
-                message = Object.assign(Object.assign({}, message), { "timestamp": new Date().toISOString(), "location": { lat: -90 + Math.random() * 180, lng: -180 + Math.random() * 360 }, "status": randomObj() });
-            }
-            else {
-                message = Object.assign(Object.assign({}, message), { "description": randomString(140) });
-            }
-            this.push(JSON.stringify(message) + '\n');
+            setTimeout(() => {
+                let message = {
+                    "vehicle_id": Math.ceil(Math.random() * 9999),
+                };
+                if (Math.random() > descriptionProportion) {
+                    message = Object.assign(Object.assign({}, message), { "timestamp": new Date().toISOString(), "location": { lat: -90 + Math.random() * 180, lng: -180 + Math.random() * 360 }, "status": randomObj() });
+                }
+                else {
+                    message = Object.assign(Object.assign({}, message), { "description": randomString(140) });
+                }
+                this.push(JSON.stringify(message) + '\n');
+            }, 86400000 / messagesPerDay);
         }
     });
 };

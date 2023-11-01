@@ -4,6 +4,7 @@
   "description": "Streaming app to mock vehicle telematics.",
   "main": "src/app.ts",
   "scripts": {
+    "start": "npx tsc && node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

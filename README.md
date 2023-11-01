@@ -164,4 +164,8 @@ node dist/app.js
 ```
 An Express endpoint will be available on http://localhost:3000.
 
-Note that the stream was developed to simulate a production environment, therefore a readable stream will constantly send messages to the endpoint. The message content is randomized to fit the many ways the vehicle messages can come. If some failure happens, the message "Service unavailable" is shown, avoiding showing private log reports.
+Note that the stream was developed to simulate a production environment.
+* A readable stream will send messages to the endpoint 200000 times a day as expected by using a setTimeout inside the stream's _read_ method.
+* The message content is randomized to fit the many ways the vehicle messages can come.
+* The ratio between telematics messages and description messages frequency can be configured by changing _descriptionToTelematicsProportion_.
+* If some failure happens, the message "Service unavailable" is shown to avoid showing private log reports.

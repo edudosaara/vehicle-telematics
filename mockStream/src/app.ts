@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 
 const descriptionToTelematicsProportion = 0.1;
+const messagesPerDay = 200000;
 
 const randomString = (size: number, spaced: boolean=true, numbers: boolean=true) => {
   const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -25,23 +26,25 @@ const randomObj = () : {[key: string]: any} => {
 const messageStream = (descriptionProportion:number=descriptionToTelematicsProportion) => {
   return new Readable({
     read() {
-      let message: {[key: string]: any} = {
-        "vehicle_id": Math.ceil(Math.random()*9999),
-      }
-      if (Math.random() > descriptionProportion) {
-        message = {
-          ...message,
-          "timestamp": new Date().toISOString(),
-          "location": {lat: -90 + Math.random()*180, lng: -180 + Math.random()*360 },
-          "status": randomObj()
+      setTimeout(() => {
+        let message: {[key: string]: any} = {
+          "vehicle_id": Math.ceil(Math.random()*9999),
         }
-      } else {
-        message = {
-          ...message,
-          "description": randomString(140)
+        if (Math.random() > descriptionProportion) {
+          message = {
+            ...message,
+            "timestamp": new Date().toISOString(),
+            "location": {lat: -90 + Math.random()*180, lng: -180 + Math.random()*360 },
+            "status": randomObj()
+          }
+        } else {
+          message = {
+            ...message,
+            "description": randomString(140)
+          }
         }
-      }
-      this.push(JSON.stringify(message)+'\n')
+        this.push(JSON.stringify(message)+'\n')
+      }, 86400000/messagesPerDay);
     }
   });
 }
