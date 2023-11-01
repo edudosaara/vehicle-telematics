@@ -1,4 +1,4 @@
-# First question - Vehicle Telematics
+# First analytical question - Vehicle Telematics
 ![Vehicle Telematics Pipeline](vehicle_telematics_pipeline.png)
 ## Sources
 Sources of real-time messages and history.
@@ -44,7 +44,7 @@ We will need three endpoints, with the format below:
   * GET /range/$START/$END?description=$BOOL
 * Vehicle and Range (with option for showing description)
   * GET /vehicle/$ID/range/$START/$END?description=$BOOL
-## Second question - Queries
+## Second analytical question - Queries
 As stated before, all queries will run a Cloud Function which will create a job that accesses BigTable and Firestore according to the request.
 A Cloud Function will only be charged when accessed, so cost of only 200 requests a day will not be a problem here.
 ### Vehicle only
@@ -56,7 +56,7 @@ _vehicle_id_ and _timestamp_ will be queried. if _description_ is also requested
 
 [Example of querying BigTable from Cloud Function.](https://cloud.google.com/bigtable/docs/samples/bigtable-functions-quickstart?hl=pt-br#bigtable_functions_quickstart-nodejs)
 
-## Third Question - Costs
+## Third analytical question - Costs
 Values calculated using [Google Cloud Pricing Calculator](https://cloud.google.com/products/calculator). Based on values from October 29th, 2023.
 ### PubSub
 | Description | Value |
@@ -150,4 +150,18 @@ Values calculated using [Google Cloud Pricing Calculator](https://cloud.google.c
 * Using [pricing table](https://cloud.google.com/api-gateway/pricing). Cost is USD 0.00 from 0 to 2 million API calls.
 
 ## Total estimate
-Total Estimated Cost: USD 11,428.87 per 1 month.
+Total Estimated Cost:
+
+**USD 11,428.87 per 1 month.**
+
+# Programming question: mockStream
+The complete project is inside _mockStream_ directory. To run it:
+```
+cd mockStream
+npm i
+npx tsc
+node dist/app.js
+```
+An Express endpoint will be available on http://localhost:3000.
+
+Note that the stream was developed to simulate a production environment, therefore a readable stream will constantly send messages to the endpoint. The message content is randomized to fit the many ways the vehicle messages can come. If some failure happens, the message "Service unavailable" is shown, avoiding showing private log reports.
